@@ -39,7 +39,7 @@ Shared library for the preceptor test runner and aggregator.
 * [License](#license)
 
 
-##Installation
+## Installation
 
 Install this module with the following command:
 ```shell
@@ -60,7 +60,7 @@ Require the module in your source-code:
 var core = require('preceptor-core');
 ```
 
-##Usage
+## Usage
 
 The module exposes two objects:
 
@@ -69,17 +69,17 @@ The module exposes two objects:
 * ```log``` - Centralized log and logger management
 
 
-###Base-Object
+### Base-Object
 
 The Base object inherits all features of the EventEmitter and exposes a couple static and dynamic properties:
 
 
-####Static Properties - Defined on the constructor
-#####```TYPE``` {string}
+#### Static Properties - Defined on the constructor
+##### ```TYPE``` {string}
 Describes the type of the object. The default value is "Base".
 Overwrite this value in sub-objects to help in debugging as the will appear as descriptor of an object.
 
-#####```extend``` {function}
+##### ```extend``` {function}
 Extends the current object by creating a new constructor and inheriting all static and dynamic properties. Every function will be wrapped in a ```__super``` wrapper that will make the ```__super``` function available in every method call. (See below for more information!)
 
 *Parameters:*
@@ -87,30 +87,30 @@ Extends the current object by creating a new constructor and inheriting all stat
 * ```prototypeProperties``` {object} - Properties that should be assigned the the ```prototype``` property of the constructor. This parameter is required.
 * ```staticProperties``` {object} - Properties that should be assigned to the constructor. This parameter is optional.
 
-#####```toString``` {function}
+##### ```toString``` {function}
 Describes the object. By default, the format is: ```[TYPE]``` where by ```TYPE``` is the value assigned to the constructor.
 
-#####```__parent``` {object}
+##### ```__parent``` {object}
 This is a reference to the parent prototype.
 
 
 
-####Dynamic Properties - Defined on ```this``` or ```prototype```
-#####```uniqueId``` {string}
+#### Dynamic Properties - Defined on ```this``` or ```prototype```
+##### ```uniqueId``` {string}
 Every instance of an object gets a unique-id assigned.
 
-#####```NAME``` {string}
+##### ```NAME``` {string}
 Describes the instance. The default value is "unnamed".
 Overwrite this value in instances to help to help identifying instances during run-time.
 
-#####```toString``` {function}
+##### ```toString``` {function}
 Describes the instance. By default, the format is: ```[TYPE::NAME(uniqueId)]``` where by ```TYPE``` is the value assigned to the constructor, and ```NAME``` is the value assigned to the instance.
 
-#####```__super``` {function}
+##### ```__super``` {function}
 Accessor function to access the parent implementation of a method. Should there be no parent method, then this method is an empty function.
 
 
-####Example
+#### Example
 
 ```javascript
 var Base = require('preceptor-core').Base;
@@ -304,11 +304,11 @@ Dog instance [Dog::dog:Zeus(instance2)]
 
 ---
 
-##utils
+## utils
 
 Utils exposes the following utility functions:
 
-###extendApply
+### extendApply
 This extend-function works like any other extend function, except it calls a function on each value and uses the result as value of a property.
 
 Parameters:
@@ -325,7 +325,7 @@ Apply-Function Parameters:
 * ```options.objectIndex``` {int} - The index of ```currentObject``` in the ```objects``` list.
 * ```options.valueIndex``` {int} - The index of the current property in ```currentObject```.
 
-####Example - Simple extend
+#### Example - Simple extend
 ```javascript
 var utils = require('../../').utils;
 var result;
@@ -358,7 +358,7 @@ Simple extend:
 { entry0: 0, name: 'obj2', entry1: 23, entry2: 78, entry3: 2 }
 ```
 
-####Example - Extend with apply function
+#### Example - Extend with apply function
 ```javascript
 console.log("Extend with function:");
 result = utils.extendApply({}, [obj1, obj2], function (value) {
@@ -373,7 +373,7 @@ Extend with function:
 { name: 'obj21', entry1: 24, entry2: 79, entry3: 3 }
 ```
 
-####Example - Logging extend apply calls
+#### Example - Logging extend apply calls
 ```javascript
 console.log("Extend logging:");
 result = utils.extendApply({}, [obj1, obj2], function (srcValue, dstValue, options) {
@@ -398,7 +398,7 @@ The value '2' with key 'entry3' from object with name 'obj2' was 'undefined' in 
 { name: '1:0', entry1: '0:1', entry2: '1:1', entry3: '1:2' }
 ```
 ___
-###deepExtend
+### deepExtend
 Extends an object with properties that will be recursively copied.
 
 Parameters:
@@ -407,7 +407,7 @@ Parameters:
 * ```options``` {object} - Additional options.
 * ```options.replace``` {boolean} - If set, then array entries in destination will be replaced instead of values appended to the destination list.
 
-####Example: Simple usage
+#### Example: Simple usage
 ```javascript
 var utils = require('preceptor-core').utils;
 
@@ -460,7 +460,7 @@ Output:
   entry3: 2 }
 ```
 
-####Example: Use with replace
+#### Example: Use with replace
 ```javascript
 var utils = require('preceptor-core').utils;
 var result;
@@ -478,7 +478,7 @@ Output:
     entry3: 2 }
 ```
 ___
-###combine
+### combine
 Combines multiple strings by applying a glue-string between them if they are not already available there. This is very similar to the ```path.join``` method, but it doesn't care what the structure of the rest or the string is.
 
 This method is used with the ```extendApply``` function to give object methods the possibility to call the parent method with ```__super()```.
@@ -487,7 +487,7 @@ Parameters:
 * ```glue``` {string} - Glue string
 * ```str, ...``` {string} - Strings that should be glued.
 
-####Example: Simple usage
+#### Example: Simple usage
 ```javascript
 var utils = require('preceptor-core').utils;
 
@@ -508,14 +508,14 @@ console.log(utils.combine('-', 'test1', '-test2'));
 ```
 ___
 
-###superWrapper
+### superWrapper
 Function that creates a new function that sets the ```__super``` property up to be called from within a function body.
 
 Parameters:
 * ```currentItem``` {*} - Value that should be used
 * ```previousItem``` {*} - Previous item value
 
-####Example: Simple usage
+#### Example: Simple usage
 ```javascript
 var utils = require('preceptor-core').utils;
 
@@ -534,7 +534,7 @@ Method test in object 1 and values 123 and 88
 Method test in object 2 and value 88
 ```
 
-####Example: Usage with extendApply
+#### Example: Usage with extendApply
 ```javascript
 var utils = require('preceptor-core').utils;
 
@@ -561,14 +561,14 @@ Method test in object 1 and values 123 and 88
 Method test in object 2 and value 88
 ```
 ___
-###require
+### require
 This function does the same thing as the original require function to load modules. However, this function will give you the option to use default values when the module cannot be found.
 
 Parameters:
 * ```module``` {string} - Module name or path
 * ```defaultValue``` {*} - Default value if the module cannot be found
 
-####Example: Simple usage
+#### Example: Simple usage
 ```javascript
 var utils = require('preceptor-core').utils;
 
@@ -577,7 +577,7 @@ var configuration = utils.require('config', {});
 
 ---
 
-##log
+## log
 
 The ```log``` object exposes a centralize logging interface including buffering for deferred logging.
 
@@ -627,7 +627,7 @@ log.flush();
 
 ---
 
-##API-Documentation
+## API-Documentation
 
 Generate the documentation with following command:
 ```shell
@@ -635,7 +635,7 @@ npm run docs
 ```
 The documentation will be generated in the ```docs``` folder of the module root.
 
-##Tests
+## Tests
 
 Run the tests with the following command:
 ```shell
@@ -643,15 +643,15 @@ npm run test
 ```
 The code-coverage will be written to the ```coverage``` folder in the module root.
 
-##Third-party libraries
+## Third-party libraries
 
 The following third-party libraries are used by this module:
 
-###Dependencies
+### Dependencies
 * underscore: http://underscorejs.org
 * log4js: https://github.com/stritti/log4js
 
-###Dev-Dependencies
+### Dev-Dependencies
 * chai: http://chaijs.com
 * codeclimate-test-reporter: https://github.com/codeclimate/javascript-test-reporter
 * coveralls: https://github.com/cainus/node-coveralls
@@ -661,7 +661,7 @@ The following third-party libraries are used by this module:
 * sinon-chai: https://github.com/domenic/sinon-chai
 * yuidocjs: https://github.com/yui/yuidoc
 
-##License
+## License
 
 The MIT License
 
